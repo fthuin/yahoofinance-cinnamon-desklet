@@ -4,9 +4,6 @@
 
 ## Description
 
-This is a simple desklet to add sticky notes in the desktop.
-The sticky notes will be saved when a focus of the text editor was lost.
-
 This repository contains the directory "yahoostocks@fthuin". You can
 download it and move it in ~/.local/share/cinnamon/desklets/
 
