@@ -1,0 +1,7 @@
+{
+    "description": "A desklet that displays stocks from Yahoo Finance",
+    "name": "Stocks Desklet",
+    "icon": "emblem-sales",
+    "prevent-decorations": true,
+    "uuid": "yahoostocks@fthuin"
+}
