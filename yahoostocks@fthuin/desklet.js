@@ -63,7 +63,7 @@ MyDesklet.prototype = {
      update_stocks : function() {
         /* Render the values onto the desklet */
         // Main box (stores everything)
-        var mainBox = new St.BoxLayout({
+        mainBox = new St.BoxLayout({
                 vertical : true,
                 width : this.width,
                 height : this.height,
