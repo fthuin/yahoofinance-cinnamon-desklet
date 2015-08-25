@@ -1,36 +1,43 @@
 {
-    "head" : {
-        "type" : "header",
-        "description" : "Desklet Settings"
-    },
-
-    "height" : {
-        "default" : 200,
-        "type" : "spinbutton",
-        "min" : 50,
-        "max" : 1600,
-        "description" : "Height :",
-        "units" : "pixels",
-        "step" : 50
-    },
-
-    "width" : {
-        "default" : 300,
-        "type" : "spinbutton",
-        "min" : 50,
-        "max" : 1600,
-        "description" : "Width : ",
-        "units" : "pixels",
-        "step" : 50
-    },
-
-    "delay" : {
-        "default" : 10,
-        "type" : "spinbutton",
-        "min" : 10,
-        "max" : 3600,
-        "description" : "Delay:",
-        "units" : "minutes",
-        "step" : 1
-    }
+  "head": {
+    "type": "header",
+    "description": "Desklet Settings"
+  },
+  "height": {
+    "default": 300,
+    "type": "spinbutton",
+    "min": 50,
+    "max": 1600,
+    "description": "Height :",
+    "units": "pixels",
+    "step": 50,
+    "tooltip": "Give the height in pixels."
+  },
+  "width": {
+    "default": 450,
+    "type": "spinbutton",
+    "min": 50,
+    "max": 1600,
+    "description": "Width : ",
+    "units": "pixels",
+    "step": 50,
+    "tooltip": "Give the width in pixels."
+  },
+  "delayMinutes": {
+    "default": 30,
+    "type": "spinbutton",
+    "min": 10,
+    "max": 3600,
+    "description": "Update frequency : ",
+    "units": "minutes",
+    "step": 1,
+    "tooltip": "Give the update frequency in minutes."
+  },
+  "companySymbols": {
+    "type": "textview",
+    "height": 200,
+    "default": "AAPL\nABBV\nADSK\nAMZN\nBAC\nBBRY\nC\nDAL\nDANG\nDHR\nDIA\nEBAY\nEEM\nEN.PA\nEWJ\nFB\nFXE\nFXI\nGE\nGLD\nGOOG\nGRMN\nHPQ\nINTC\nIWM\nJD\nLNKD\nMMB.PA\nMPLX\nMRVL\nMSFT\nMWE\nMXL\nNBG\nQQQ\nRHT\nRIG\nSFUN\nSMH\nSPY\nSWIR\nT\nTWTR\nUNP\nUSO\nUTX\nUUP\nVXX\nXLF\nXOMA\nYELP\nYHOO",
+    "description": "Company Symbol List :",
+    "tooltip": "Write the company codes here separated with line-breaks."
+  }
 }
