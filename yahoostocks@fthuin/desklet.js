@@ -36,6 +36,20 @@ StockQuoteDesklet.prototype = {
         this.settings.bindProperty(Settings.BindingDirection.IN, "width", "width", this.onDisplayChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "delayMinutes", "delayMinutes", this.onSettingsChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "companySymbols", "companySymbolsText", this.onSettingsChanged, null);
+        this.settings.bindProperty(Settings.BindingDirection.IN, "showIcon", "showIcon", this.onSettingsChanged, null);
+        this.settings.bindProperty(Settings.BindingDirection.IN, "showStockName", "showStockName", this.onSettingsChanged, null);
+        this.settings.bindProperty(Settings.BindingDirection.IN, "showStockSymbol", "showStockSymbol", this.onSettingsChanged, null);
+        this.settings.bindProperty(Settings.BindingDirection.IN, "showStockPrice", "showStockPrice", this.onSettingsChanged, null);
+        this.settings.bindProperty(Settings.BindingDirection.IN, "showStockPercentChange", "showStockPercentChange", this.onSettingsChanged, null);
+    },
+    getQuoteDisplaySettings: function() {
+      return {
+          "icon": this.showIcon,
+          "stockName": this.showStockName,
+          "stockTicker": this.showStockSymbol,
+          "stockPrice": this.showStockPrice,
+          "percentChange": this.showStockPercentChange
+      };
     },
     onDisplayChanged: function () {
         this.resize();
@@ -63,7 +77,7 @@ StockQuoteDesklet.prototype = {
     },
     render: function (stockQuotes) {
         var table = new StockQuotesTable();
-        table.render(stockQuotes);
+        table.render(stockQuotes, this.getQuoteDisplaySettings());
 
         var tableContainer = new St.BoxLayout({
             vertical: true
@@ -110,19 +124,30 @@ StockQuotesTable.prototype = {
         GBP: "\u00A3",
         INR: "\u20A8"
     },
-    render: function (stockQuotes) {
+    render: function (stockQuotes, settings) {
         for (var rowIndex = 0, l = stockQuotes.length; rowIndex < l; rowIndex++)
-            this.renderTableRow(stockQuotes[rowIndex], rowIndex);
+            this.renderTableRow(stockQuotes[rowIndex], rowIndex, settings);
     },
-    renderTableRow: function (stockQuote, rowIndex) {
-        var cellContents = [
-            this.createPercentChangeIcon(stockQuote),
-            this.createCompanyNameLabel(stockQuote),
-            this.createStockSymbolLabel(stockQuote),
-            this.createStockPriceLabel(stockQuote),
-            this.createPercentChangeLabel(stockQuote)
-        ];
+    renderTableRow: function (stockQuote, rowIndex, shouldShow) {
 
+        var cellContents = [];
+
+        if (shouldShow.icon) {
+            cellContents.push(this.createPercentChangeIcon(stockQuote));
+        }
+        if (shouldShow.stockName) {
+            cellContents.push(this.createCompanyNameLabel(stockQuote));
+        }
+        if (shouldShow.stockTicker) {
+            cellContents.push(this.createStockSymbolLabel(stockQuote));
+        }
+        if (shouldShow.stockPrice) {
+            cellContents.push(this.createStockPriceLabel(stockQuote));
+        }
+        if (shouldShow.percentChange) {
+            cellContents.push(this.createPercentChangeLabel(stockQuote));
+        }
+        
         for (var columnIndex = 0; columnIndex < cellContents.length; ++columnIndex)
             this.el.add(cellContents[columnIndex], {
                 row: rowIndex,
