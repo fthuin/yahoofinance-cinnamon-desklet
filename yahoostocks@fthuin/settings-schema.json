@@ -39,5 +39,42 @@
     "default": "AAPL\nABBV\nADSK\nAMZN\nBAC\nBBRY\nC\nDAL\nDANG\nDHR\nDIA\nEBAY\nEEM\nEN.PA\nEWJ\nFB\nFXE\nFXI\nGE\nGLD\nGOOG\nGRMN\nHPQ\nINTC\nIWM\nJD\nLNKD\nMMB.PA\nMPLX\nMRVL\nMSFT\nMWE\nMXL\nNBG\nQQQ\nRHT\nRIG\nSFUN\nSMH\nSPY\nSWIR\nT\nTWTR\nUNP\nUSO\nUTX\nUUP\nVXX\nXLF\nXOMA\nYELP\nYHOO",
     "description": "Company Symbol List :",
     "tooltip": "Write the company codes here separated with line-breaks."
+  },
+  "separator": {
+    "type": "separator"
+  },
+  "display": {
+    "type": "header",
+    "description": "Change what is visible for each stock"
+  },
+  "showIcon": {
+    "type": "checkbox",
+    "default": true,
+    "description": "Show up/down icon",
+    "tooltip": "Shows whether the stock price is up or down"
+  },
+  "showStockName": {
+    "type": "checkbox",
+    "default": true,
+    "description": "Show full stock name",
+    "tooltip": "Shows the full stock name (eg Microsoft Corporation)"
+  },
+  "showStockSymbol": {
+    "type": "checkbox",
+    "default": true,
+    "description": "Show stock ticker",
+    "tooltip": "Shows the stock ticker (eg MSFT)"
+  },
+  "showStockPrice": {
+    "type": "checkbox",
+    "default": true,
+    "description": "Show stock price",
+    "tooltip": "Shows the current stock price"
+  },
+  "showStockPercentChange": {
+    "type": "checkbox",
+    "default": true,
+    "description": "Show percent change",
+    "tooltip": "Shows the percent change in the stock price"
   }
 }
