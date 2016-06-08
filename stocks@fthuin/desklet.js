@@ -1,3 +1,4 @@
+/* jshint esversion : 6 */
 const Desklet = imports.ui.desklet; // cinnamon desklet user interface
 const St = imports.gi.St; // Shell toolkit library from GNOME
 const Gio = imports.gi.Gio; // URL-IO-Operations
@@ -8,7 +9,7 @@ const Lang = imports.lang; // Binding desklet to mainloop function
 const Settings = imports.ui.settings; // Settings loader based on settings-schema.json file
 
 var console = global; // So we can use console.log
-var dirPath = 'yahoostocks@fthuin';
+var dirPath = 'stocks@fthuin';
 var deskletDir = GLib.get_home_dir() + "/.local/share/cinnamon/desklets/" + dirPath;
 
 
@@ -31,7 +32,7 @@ StockQuoteDesklet.prototype = {
         this.onUpdate();
     },
     loadSettings: function () {
-        this.settings = new Settings.DeskletSettings(this, this.metadata['uuid'], this.id);
+        this.settings = new Settings.DeskletSettings(this, this.metadata.uuid, this.id);
         this.settings.bindProperty(Settings.BindingDirection.IN, "height", "height", this.onDisplayChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "width", "width", this.onDisplayChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "delayMinutes", "delayMinutes", this.onSettingsChanged, null);
@@ -58,6 +59,10 @@ StockQuoteDesklet.prototype = {
         this.unrender();
         this.removeUpdateTimer();
         this.onUpdate();
+    },
+    on_desklet_removed: function() {
+        this.unrender();
+        this.removeUpdateTimer();
     },
     onUpdate: function () {
         var companySymbols = this.companySymbolsText.split("\n");
@@ -147,7 +152,7 @@ StockQuotesTable.prototype = {
         if (shouldShow.percentChange) {
             cellContents.push(this.createPercentChangeLabel(stockQuote));
         }
-        
+
         for (var columnIndex = 0; columnIndex < cellContents.length; ++columnIndex)
             this.el.add(cellContents[columnIndex], {
                 row: rowIndex,
@@ -177,13 +182,13 @@ StockQuotesTable.prototype = {
     },
     createPercentChangeIcon: function (stockQuote) {
         var path = "";
-        var percentChange = parseFloat(stockQuote.PercentChange.slice(0, -1));
+        var percentChange = stockQuote.PercentChange === null ? 0.0 : parseFloat(stockQuote.PercentChange.slice(0, -1));
 
         if (percentChange > 0)
             path = "/icons/up.svg";
         else if (percentChange < 0)
             path = "/icons/down.svg";
-        else if (percentChange == 0)
+        else if (percentChange === 0.0)
             path = "/icons/eq.svg";
         var iconFile = Gio.file_new_for_path(deskletDir + '' + path);
 
@@ -197,7 +202,7 @@ StockQuotesTable.prototype = {
     },
     createPercentChangeLabel: function (stockQuote) {
         return new St.Label({
-            text: stockQuote.PercentChange,
+            text: stockQuote.PercentChange === null ? "N/A" : stockQuote.PercentChange,
             style_class: "stocks-label"
         });
     }
@@ -245,12 +250,11 @@ YahooServiceBasedStockQuoteReader.prototype = {
         var rowCount = response.query.count;
         if (rowCount == 1)
             dataRows = [response.query.results.quote];
-        for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
-            quotes[rowIndex] = dataRows[rowIndex];
+        var i = 0;
+        for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            if (dataRows[rowIndex].PercentChange === null) i++;
+            else quotes[rowIndex-i] = dataRows[rowIndex];
+        }
         return quotes;
     }
 };
-
-
-
-
